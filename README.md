@@ -21,12 +21,13 @@ https://github.com/linkerx/curso-mern-slides
 git clone https://github.com/linkerx/curso-mern-app.git
 
 ### Con Docker:
-
+```
 docker-compose up -d
 http://localhost:9010
-
+```
 ### En el equipo:
-
-cd rev
+```
+cd react
 npm start
 http://localhost:8000
+```
