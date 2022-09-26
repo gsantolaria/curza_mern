@@ -18,6 +18,8 @@ https://github.com/linkerx/curso-mern-slides
 
 ## Como usar este repositorio:
 
+git clone https://github.com/linkerx/curso-mern-app.git
+
 ### Con Docker:
 
 docker-compose up -d
