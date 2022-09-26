@@ -15,5 +15,3 @@ https://github.com/linkerx/curso-mern-app
 ### Presentación
 
 https://github.com/linkerx/curso-mern-slides
-
-Aqui encontrarán el código fuente del curso 
