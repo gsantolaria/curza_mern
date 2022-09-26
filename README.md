@@ -15,3 +15,16 @@ https://github.com/linkerx/curso-mern-app
 ### Presentación
 
 https://github.com/linkerx/curso-mern-slides
+
+## Como usar este repositorio:
+
+### Con Docker:
+
+docker-compose up -d
+http://localhost:9010
+
+### En el equipo:
+
+cd rev
+npm start
+http://localhost:8000
