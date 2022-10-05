@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import Comment from './comment';
+import Comments from './components/comments';
 
 // obtener la referencia de un elemento del dom id=root
 const el = document.getElementById('root');
@@ -14,11 +14,8 @@ const root = ReactDOM.createRoot(el);
 // crear un componente
 function App() {
     return (
-        <div className='comments' >
-            <Comment author='pepe' date='ahora' />
-            <Comment author='diego' date='hace 2 minutos' />
-            <Comment author='mariano' date='hace 5 minutos'/>
-            <Comment author='pablo' date='hace 1 hora'/>
+        <div className='app'>
+            <Comments />
         </div>
     )
 }
