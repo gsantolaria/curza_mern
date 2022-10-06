@@ -57,7 +57,7 @@ class CommentsList extends React.Component {
                                 key={index} 
                                 author={this.getAuthorName(item.author)}
                                 authorId={item.author}
-                                date={item.date.toLocaleDateString()} 
+                                date={item.date.toLocaleString()} 
                                 text={item.text}
                                 filterCommentsByAuthor={this.filterCommentsByAuthor}
                             />

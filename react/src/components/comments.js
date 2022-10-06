@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CommentsList from './commentsList';
-import { COMMENTS, AUTHORS } from './constants';
+import {Data} from './data';
 
 class Comments extends React.Component {
 
@@ -9,18 +9,19 @@ class Comments extends React.Component {
         super(props);
         this.state = {
             comments: null,
-            authors: AUTHORS,
+            authors: Data.getAllAuthors(),
         }
     }
 
     componentDidMount(){
         setTimeout(() => {
-            this.setState({
-                comments: COMMENTS,
-                filteredComments: COMMENTS
-            })
+           const comments = Data.getAllComments();
+           this.setState({
+               comments: comments,
+               filteredComments: comments
+           })
         },1000);
-    }
+     }
 
     render() {
         return (
