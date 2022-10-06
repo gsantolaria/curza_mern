@@ -9,6 +9,8 @@ class CommentsList extends React.Component {
             filteredComments: props.comments,
             authorSelected: 0
         }
+        
+        this.delComment = props.delComment;
 
         this.filterCommentsByAuthor = this.filterCommentsByAuthor.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -55,11 +57,13 @@ class CommentsList extends React.Component {
                 { this.state.filteredComments.map((item, index) => {
                     return <Comment 
                                 key={index} 
+                                id={item.id}
                                 author={this.getAuthorName(item.author)}
                                 authorId={item.author}
                                 date={item.date.toLocaleString()} 
                                 text={item.text}
                                 filterCommentsByAuthor={this.filterCommentsByAuthor}
+                                delComment={this.delComment}
                             />
                 })}
             </div>

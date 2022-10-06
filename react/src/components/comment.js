@@ -13,7 +13,7 @@ const Comment = (props) => {
                     {props.text}
                 </div>
             </div>
-            <button /*onClick={{props.deleteComment(props.comment.id)}}*/ style={{ padding:'5px' }}>Delete</button>
+            <button onClick={() => props.delComment(props.id)} style={{ padding:'5px' }}>Delete</button>
         </div>
     )
 }

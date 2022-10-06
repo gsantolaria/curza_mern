@@ -10,7 +10,9 @@ class Comments extends React.Component {
         this.state = {
             comments: null,
             authors: Data.getAllAuthors(),
+            loading: true,
         }
+        this.delComment = this.delComment.bind(this);
     }
 
     componentDidMount(){
@@ -18,15 +20,23 @@ class Comments extends React.Component {
            const comments = Data.getAllComments();
            this.setState({
                comments: comments,
-               filteredComments: comments
+               filteredComments: comments,
+               loading: false
            })
         },1000);
      }
 
+    delComment(commentId){
+        if(Data.deleteComment(commentId)){
+            this.setState({loading: true});
+            this.componentDidMount();
+        }
+    }
+
     render() {
         return (
             <div className='comments' >
-                { this.state.comments ?
+                { !this.state.loading ?
                     <>
                         {/*<CommentsForm authors={this.state.authors} addComment={this.addComment} />*/}
                         <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
