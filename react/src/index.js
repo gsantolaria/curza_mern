@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(el);
 // crear un componente
 function App() {
     return (
-        <div className='app'>
+        <div className='app' style={{ height: '100%'}}>
             <Comments />
         </div>
     )

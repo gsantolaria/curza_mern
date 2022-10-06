@@ -27,6 +27,7 @@ class Comments extends React.Component {
      }
 
     delComment(commentId){
+ 
         if(Data.deleteComment(commentId)){
             this.setState({loading: true});
             this.componentDidMount();
@@ -35,14 +36,22 @@ class Comments extends React.Component {
 
     render() {
         return (
-            <div className='comments' >
-                { !this.state.loading ?
-                    <>
-                        {/*<CommentsForm authors={this.state.authors} addComment={this.addComment} />*/}
-                        <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
-                    </>
+            <div className='comments' style={{ height: '100%'}} >
+                { this.state.comments ?
+                           <div style={{ height: '100%'}}>
+                               <div style={{ position:'absolute', width: '100%', zIndex:'1'}}>
+                               {/*<CommentsForm authors={this.state.authors} addComment={this.addComment} />*/}
+                               <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
+                               </div>
+                               <div style={{ display: !this.state.loading && 'none' }}>
+                                    <h2 style={{ position:'absolute', zIndex:'3', width: '100%', height: '100%', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Cargando...</h2>
+                                    <div style={{ position:'absolute', zIndex:'2', background: 'white', opacity: '0.5', width: '100%', height: '100%' }} >
+                                    </div>
+                                </div>
+                           </div>
+
                 :
-                    <div>Cargando...</div>    
+                    <h2 style={{ position:'absolute', zIndex:'3', width: '100%', height: '100%', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Cargando App...</h2>    
                 }
             </div>
         )
