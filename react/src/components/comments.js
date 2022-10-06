@@ -54,9 +54,13 @@ class Comments extends React.Component {
             <div className='comments' style={{ height: '100%'}} >
                 { this.state.comments ?
                            <div style={{ height: '100%'}}>
-                               <div style={{ position:'absolute', width: '100%', zIndex:'1'}}>
-                               <CommentsForm authors={this.state.authors} addComment={this.addComment} />
-                               <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
+                               <div style={{ position:'absolute', zIndex:'1', display:'grid', gridTemplateColumns:'auto auto'}}>
+                                   <div style={{padding: '1.5em'}}>
+                                       <CommentsForm authors={this.state.authors} addComment={this.addComment} />
+                                   </div>
+                                   <div style={{padding: '1.5em'}}>
+                                       <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
+                                   </div>
                                </div>
                                <div style={{ display: !this.state.loading && 'none' }}>
                                     <h2 style={{ position:'absolute', zIndex:'3', width: '100%', height: '100%', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Cargando...</h2>

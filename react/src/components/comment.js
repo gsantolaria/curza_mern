@@ -13,7 +13,7 @@ const Comment = (props) => {
                     {props.text}
                 </div>
             </div>
-            <button onClick={() => window.confirm('Seguro que desea eliminar el comentario?') && props.delComment(props.id)} style={{ padding:'5px' , background: 'red', color: 'white', cursor:'pointer'}} ><strong>Delete</strong></button>
+            <button onClick={() => window.confirm('Seguro que desea eliminar el comentario?') && props.delComment(props.id)} style={{ padding:'5px' , background: 'red', color: 'white', cursor:'pointer', border: 'none', margin: '1em'}} ><strong>Borrar</strong></button>
         </div>
     )
 }
