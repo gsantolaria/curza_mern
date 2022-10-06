@@ -45,12 +45,15 @@ class CommentsList extends React.Component {
     render() {
         return (
             <div className='componentsList'>
-            <select name='authorsFilter' onChange={this.handleFilterChange} value={this.state.authorSelected}>
-                <option value={0}>Todos</option>
-                { this.props.authors.map((item, index) => {
-                    return <option key={index} value={item.id}>{item.name}</option>
-                })}
-            </select>
+                <div style={{ width: '500px'}}>
+                    <label htmlFor="authorsFilter">Filtrar por autor: </label>
+                    <select name='authorsFilter' onChange={this.handleFilterChange} value={this.state.authorSelected} style={{ width: '100%'}}>
+                    <option value={0}>Todos</option>
+                    { this.props.authors.map((item, index) => {
+                        return <option key={index} value={item.id}>{item.name}</option>
+                    })}
+                    </select>
+                </div>
 
         { this.state.filteredComments.length > 0 ?
             <div>

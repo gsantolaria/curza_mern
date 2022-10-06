@@ -29,23 +29,30 @@ class CommentsForm extends React.Component {
 
     render(){
         return (
-            <div className='commentsForm'>
-                {this.state.error && <div style={{ background: '#dc3545 ', color:'white', textAlign: 'center'}}>Complete todos los datos para subir el comentario</div> }
-                <form>
-                    <div>
-                         <label htmlFor="author">Autor</label>
+            <div className='commentsForm' style={{ paddingBlock: '1em'}}>
+                <form style={{  width: '500px', border: '2px solid', marginTop: '10px'}}>
+                {this.state.error && <div style={{ background: '#ffc107 ', textAlign: 'center'}}>Complete todos los datos para subir el comentario</div> }
+                    <h3 style={{ textAlign: 'center' }}>Cargar nuevo Comentario</h3>
+                    <div style={{  margin: '10px', display: 'grid', gridTemplateColumns: '35% 65%'}}>
+                        <label htmlFor="author">Autor:</label>
                          <select id="" name="author">
+                            <option value="0">Seleccione un autor...</option>
                             { this.props.authors.map((item, index) => {
                                  return <option key={index} value={item.id}>{item.name}</option>
                              })}
                          </select>
                     </div>
-                    <div>
-                         <label htmlFor="text">Comentario</label>
-                        <input type="text-area" name="text" required />
+                    <div style={{  margin: '10px', display: 'grid', gridTemplateColumns: '35% 65%'}}>
+                        <label htmlFor="text">Comentario:</label>
+                        <textarea name="text" required style={{ height: '90px'}}/>
                     </div>
-                    <div>
-                        <button type="submit" onClick={(e) => {e.preventDefault(); this.processComment(parseInt(e.target.form.elements.author.value), e.target.form.elements.text.value);}}>Comentar</button>
+                    <div style={{  margin: '10px', textAlign: 'center'}}>
+                        <button
+                            type="submit"
+                            style={{ background: '#198754', width: '75%', padding:'5px', cursor:'pointer'}}
+                            onClick={(e) => {e.preventDefault(); this.processComment(parseInt(e.target.form.elements.author.value), e.target.form.elements.text.value);}}>
+                            Comentar
+                        </button>
                     </div>
                 </form>
             </div>
