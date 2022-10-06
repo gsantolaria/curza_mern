@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CommentsList from './commentsList';
+import CommentsForm from './commentsForm';
 import {Data} from './data';
 
 class Comments extends React.Component {
@@ -13,6 +14,7 @@ class Comments extends React.Component {
             loading: true,
         }
         this.delComment = this.delComment.bind(this);
+        this.addComment = this.addComment.bind(this);
     }
 
     componentDidMount(){
@@ -26,6 +28,9 @@ class Comments extends React.Component {
         },1000);
      }
 
+    /**
+     * @param {int} commentId
+     */
     delComment(commentId){
  
         if(Data.deleteComment(commentId)){
@@ -34,13 +39,23 @@ class Comments extends React.Component {
         }
     }
 
+    /**
+     * @param {int} authorId
+     * @param {string} text
+     */
+    addComment(authorId, text){
+        Data.saveNewComment(authorId, text);
+        this.setState({loading: true});
+        this.componentDidMount();
+    }
+
     render() {
         return (
             <div className='comments' style={{ height: '100%'}} >
                 { this.state.comments ?
                            <div style={{ height: '100%'}}>
                                <div style={{ position:'absolute', width: '100%', zIndex:'1'}}>
-                               {/*<CommentsForm authors={this.state.authors} addComment={this.addComment} />*/}
+                               <CommentsForm authors={this.state.authors} addComment={this.addComment} />
                                <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
                                </div>
                                <div style={{ display: !this.state.loading && 'none' }}>
