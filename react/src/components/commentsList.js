@@ -14,6 +14,17 @@ class CommentsList extends React.Component {
         this.handleFilterChange = this.handleFilterChange.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        console.log('actualizó',this.props.comments);
+        if(prevProps.comments.length != this.props.comments.length) {
+            console.log('actualizó los comments');
+            this.setState({
+                filteredComments: this.props.comments,
+                authorSelected: 0
+            })
+        }
+    }
+
     getAuthorName(authorId) {
         return this.props.authors.find((item) => {
             return item.id === authorId
