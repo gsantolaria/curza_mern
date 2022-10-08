@@ -29,6 +29,18 @@ export const COMMENTS = [
         date: new Date('2022-9-30'),
         text: 'chau'
     },
+    {
+        id: 6,
+        author: 4,
+        date: new Date('2022-10-5'),
+        text: 'seeeee'
+    },
+    {
+        id: 7,
+        author: 1,
+        date: new Date('2022-10-8'),
+        text: 'chau'
+    },
 ]
 
 export const AUTHORS = [
