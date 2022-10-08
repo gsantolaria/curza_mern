@@ -1,118 +1,91 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import CommentsList from './commentsList';
 import CommentsForm from './commentsForm';
 import { COMMENTS, AUTHORS } from './constants';
 import './comments.css'
 
-class Comments extends React.Component {
+function Comments() {
+    const [comments, setComments] = useState(null);
+    const [authors] = useState(AUTHORS);
+    const [scroller, setScroller] = useState({top: true, bottom: false});
+    const comRef = useRef();
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            comments: null,
-            authors: AUTHORS,
-            topScroller: true,
-            bottomScroller: false,
+    useEffect(() => {
+        setTimeout(() => {setComments(COMMENTS)},1000);
+        comRef.current.addEventListener('scroll', handleScroll);
+        return () => {
+            comRef.current.removeEventListener('scroll', handleScroll);
         }
+    },[])
 
-        this.comRef = React.createRef();
-
-        this.addComment = this.addComment.bind(this);
-        this.delComment = this.delComment.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
-        this.goToTop = this.goToTop.bind(this);
-        this.goToBottom = this.goToBottom.bind(this);        
-    }
-
-    componentDidMount(){
-        setTimeout(() => {
-            this.setState({
-                comments: COMMENTS,
+    const handleScroll = (event) => {
+        if(comRef.current.scrollTop == 0) {
+            setScroller({
+                top: true,
+                bottom: false,
             })
-        },1000);
-        this.comRef.current.addEventListener('scroll', this.handleScroll);
-    }
-
-    componentWillUnmount() {
-        this.comRef.current.removeEventListener('scroll', this.handleScroll);
-    }
-
-    handleScroll(event) {
-        if(this.comRef.current.scrollTop == 0) {
-            this.setState({
-                topScroller: true,
-                bottomScroller: false,
-            })
-        } else if(this.comRef.current.scrollTop >= (this.comRef.current.scrollHeight - this.comRef.current.clientHeight)){
-            this.setState({
-                topScroller: false,
-                bottomScroller: true,
+        } else if(comRef.current.scrollTop >= (comRef.current.scrollHeight - comRef.current.clientHeight)){
+            setScroller({
+                top: false,
+                bottom: true,
             })
         } else {
-            this.setState({
-                topScroller: false,
-                bottomScroller: false,
+            setScroller({
+                top: false,
+                bottom: false,
             })
         }
     }
 
-    goToTop(){
-        this.comRef.current.scrollTo({
-           top: 0,
-           left: 0,
+    const goToTop = () => {
+        comRef.current.scrollTo({
+            top: 0,
+            left: 0,
             behavior: 'smooth'
         })
     }
 
-    goToBottom(){
-        this.comRef.current.scrollTo({
-           top: this.comRef.current.scrollHeight - this.comRef.current.clientHeight,
+    const goToBottom = () => {
+        comRef.current.scrollTo({
+           top: comRef.current.scrollHeight - comRef.current.clientHeight,
            left: 0,
-            behavior: 'smooth'
+           behavior: 'smooth'
         })
     }
 
-    addComment(data) {
+    const addComment = (data) => {
         const newComment = {
-            id: (this.state.comments[this.state.comments.length -1].id) + 1,
+            id: (comments[comments.length -1].id) + 1,
             author: parseInt(data.commentAuthor),
             text: data.commentText,
             date: new Date()
         }
-        const newComments = this.state.comments.concat(newComment);
-        this.setState({
-            comments: newComments,
-        })
-        this.goToBottom();
+        const newComments = comments.concat(newComment);
+        setComments(newComments);
+        goToBottom();
     }
 
-    delComment(commentId) {
-        this.setState({
-            comments: this.state.comments.filter((item) =>{
-                return commentId !== item.id
-            }),
-        })
+    const delComment = (commentId) => {
+        setComments(comments.filter((item) =>{return commentId !== item.id}));
     }
 
-    render() {
-        return (
-            <div className='comments' ref={this.comRef}>
-                { this.state.topScroller &&
-                    <div className='top-scroller' onClick={this.goToBottom}>Ir abajo</div>
-                }
-                { this.state.comments ?
-                    <>
-                        <CommentsForm authors={this.state.authors} addComment={this.addComment}/>
-                        <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment}/>
-                    </>
-                :
-                    <div>Cargando...</div>    
-                }
-                { this.state.bottomScroller &&
-                    <div className='bottom-scroller' onClick={this.goToTop}>Ir arriba</div>
-                }
-            </div>
-        )
-    }
+    return (
+        <div className='comments' ref={comRef}>
+            { scroller.top &&
+                <div className='top-scroller' onClick={goToBottom}>Ir abajo</div>
+            }
+            { comments ?
+                <>
+                    <CommentsForm authors={authors} addComment={addComment}/>
+                    <CommentsList comments={comments} authors={authors} delComment={delComment}/>
+                </>
+            :
+                <div>Cargando...</div>    
+            }
+            { scroller.bottom &&
+                <div className='bottom-scroller' onClick={goToTop}>Ir arriba</div>
+            }
+        </div>
+    )
 }
 export default Comments;

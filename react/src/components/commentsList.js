@@ -1,83 +1,65 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Comment from './comment';
 
-class CommentsList extends React.Component {
+function CommentsList(props) {
+    const [filteredComments, setFilteredComments] = useState([]);
+    const [authorSelected, setAuthorSelected] = useState(0);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            filteredComments: props.comments,
-            authorSelected: 0
-        }
+    useEffect(() => {
+        setFilteredComments(props.comments);
+        setAuthorSelected(0);
+    },[props.comments])
 
-        this.filterCommentsByAuthor = this.filterCommentsByAuthor.bind(this);
-        this.handleFilterChange = this.handleFilterChange.bind(this);
-    }
-
-    componentDidUpdate(prevProps,prevState){
-        if(this.props.comments.length !== prevProps.comments.length) {
-            this.setState({
-                filteredComments: this.props.comments,
-                authorSelected: 0
-            })
-        }
-    }
-
-    getAuthorName(authorId) {
-        return this.props.authors.find((item) => {
+    const getAuthorName = (authorId) => {
+        return props.authors.find((item) => {
             return item.id === authorId
         }).name
     }
 
-    handleFilterChange(event) {
+    const handleFilterChange = (event) => {
         const authorId = event.target.value;
-        this.filterCommentsByAuthor(authorId);
+        filterCommentsByAuthor(authorId);
     }
 
-    filterCommentsByAuthor(authorId) {
-        let filtered = this.props.comments;
+    const filterCommentsByAuthor = (authorId) => {
+        let filtered = props.comments;
         if(authorId != '0'){
-            filtered = this.props.comments.filter((item) => {
+            filtered = props.comments.filter((item) => {
                 return item.author == authorId
             })
         }
-
-        this.setState({
-            filteredComments: filtered,
-            authorSelected: authorId
-        })
+        setFilteredComments(filtered);
+        setAuthorSelected(authorId);
     }
 
-    render() {
-        return (
-            <div className='componentsList' >
-                <select name='authorsFilter' onChange={this.handleFilterChange} value={this.state.authorSelected}>
-                    <option value={0}>Todos</option>
-                    { this.props.authors.map((item, index) => {
-                        return <option key={index} value={item.id}>{item.name}</option>
+    return (
+        <div className='componentsList' >
+            <select name='authorsFilter' onChange={handleFilterChange} value={authorSelected}>
+                <option value={0}>Todos</option>
+                { props.authors.map((item, index) => {
+                    return <option key={index} value={item.id}>{item.name}</option>
+                })}
+            </select>
+
+            { filteredComments.length > 0 ?
+                <div>
+                    { filteredComments.map((item, index) => {
+                        return <Comment 
+                                    key={index}
+                                    author={getAuthorName(item.author)}
+                                    authorId={item.author}
+                                    date={item.date.toLocaleDateString()} 
+                                    text={item.text}
+                                    filterCommentsByAuthor={filterCommentsByAuthor}
+                                    delComment={props.delComment}
+                                    commentId={item.id}
+                                />
                     })}
-                </select>
-
-                { this.state.filteredComments.length > 0 ?
-                    <div>
-                        { this.state.filteredComments.map((item, index) => {
-                            return <Comment 
-                                        key={index}
-                                        author={this.getAuthorName(item.author)}
-                                        authorId={item.author}
-                                        date={item.date.toLocaleDateString()} 
-                                        text={item.text}
-                                        filterCommentsByAuthor={this.filterCommentsByAuthor}
-                                        delComment={this.props.delComment}
-                                        commentId={item.id}
-                                    />
-                        })}
-                    </div>
-                :
-                    <div>Lo dejo a tu criterio.</div>
-                }
-            </div>
-        )
-    }
+                </div>
+            :
+                <div>Lo dejo a tu criterio.</div>
+            }
+        </div>
+    )
 }
 export default CommentsList;
