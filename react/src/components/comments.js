@@ -15,6 +15,7 @@ class Comments extends React.Component {
         }
 
         this.addComment = this.addComment.bind(this);
+        this.delComment = this.delComment.bind(this);
     }
 
     componentDidMount(){
@@ -25,29 +26,34 @@ class Comments extends React.Component {
         },1000);
     }
 
-    addComment(values) {
-
+    addComment(data) {
         const newComment = {
-            author: parseInt(values.commentAuthor),
-            date: new Date(),
-            text: values.commentText
+            id: (this.state.comments[this.state.comments.length -1].id) + 1,
+            author: parseInt(data.commentAuthor),
+            text: data.commentText,
+            date: new Date()
         }
-
         const newComments = this.state.comments.concat(newComment);
-        console.log("nueva lista de comentario: ",newComments);
-
         this.setState({
-            comments: newComments
+            comments: newComments,
+        })
+    }
+
+    delComment(commentId) {
+        this.setState({
+            comments: this.state.comments.filter((item) =>{
+                return commentId !== item.id
+            }),
         })
     }
 
     render() {
         return (
-            <div className='comments' >
+            <div className='comments' ref={this.comRef}>
                 { this.state.comments ?
                     <>
-                        <CommentsForm authors={this.state.authors} addComment={this.addComment} />
-                        <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment} />
+                        <CommentsForm authors={this.state.authors} addComment={this.addComment}/>
+                        <CommentsList comments={this.state.comments} authors={this.state.authors} delComment={this.delComment}/>
                     </>
                 :
                     <div>Cargando...</div>    

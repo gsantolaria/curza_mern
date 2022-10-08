@@ -1,25 +1,30 @@
 export const COMMENTS = [
     {
+        id: 1,
         author: 1,
         date: new Date('2022-8-15'),
         text: 'este es el 1er mensaje'
     },
     {
+        id: 2,
         author: 2,
         date: new Date('2022-8-23'),
         text: 'que lindo mensaje'
     },
     {
+        id: 3,
         author: 3,
         date: new Date('2022-9-5'),
         text: 'te parece?'
     },
     {
+        id: 4,
         author: 4,
         date: new Date('2022-9-25'),
         text: 'seeeee'
     },
     {
+        id: 5,
         author: 1,
         date: new Date('2022-9-30'),
         text: 'chau'
