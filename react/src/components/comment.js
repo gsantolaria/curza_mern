@@ -8,6 +8,7 @@ const Comment = (props) => {
                 <div className='metadata' style={{display: 'flex', justifyContent: 'space-between'}}>
                     <a href='/' className='author' onClick={(e) => {e.preventDefault();props.filterCommentsByAuthor(props.authorId)}}>{props.author}</a>
                     <span>{props.date}</span>
+                    <a href='/' className='author' onClick={(e) => {e.preventDefault();props.delComment(props.commentId)}}>borrar</a>
                 </div>
                 <div className='text'>
                     {props.text}
