@@ -1,24 +1,8 @@
-// importar react y react-dom
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; 
+import App from './app';
+import './style.css';
 
-import Comments from './components/comments';
-
-// obtener la referencia de un elemento del dom id=root
-const el = document.getElementById('root');
-
-
-// decirle a react que tome el control de el elemento
-const root = ReactDOM.createRoot(el);
-
-// crear un componente
-function App() {
-    return (
-        <div className='app'>
-            <Comments />
-        </div>
-    )
-}
-
-// mostrarlo en pantalla
-root.render(<App/>);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<BrowserRouter><App /></BrowserRouter>);
