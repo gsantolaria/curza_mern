@@ -1,0 +1,8 @@
+nav li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav li a.active {
+    color: #FF0;
+}
