@@ -1,11 +1,26 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-const ListaProductos = ({ productos, catSelected }) => {
+const ListaProductos = ({ catSelected }) => {
+    const [productos, setProductos] = useState([]);    
+
+    useEffect(() => {
+        if(catSelected) {
+            axios.get('http://localhost:8000/productos?cat='+catSelected).then((response)=>{
+                setProductos(response.data);
+            }).catch((error)=>{});
+        } else {
+            axios.get('http://localhost:8000/productos').then((response)=>{
+                setProductos(response.data);
+            }).catch((error)=>{});
+        }
+    },[catSelected])
+
+
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-            { productos && productos.filter((item)=>{
-                return (catSelected == 0) || (item.cat == catSelected)
-            }).map((prod, index) => {
+            { productos.map((prod, index) => {
                 return (
                 <Card key={index} sx={{width: '300px', minWidth: '200px', m:2}}>
                     <CardMedia 

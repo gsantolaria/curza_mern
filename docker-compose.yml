@@ -9,3 +9,13 @@ services:
     command: ['npm','run','start']
     ports:
       - 3000:3000
+
+  node:
+    image: node:16
+    restart: always
+    volumes:
+      - ./node:/app
+    working_dir: /app
+    command: ['node','index.js']
+    ports:
+      - 8000:8000
