@@ -1,6 +1,16 @@
+import { useState, useEffect } from 'react';
+import axios from "axios";
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 
-const Categorias = ({ categorias, setCatSelected }) => {
+const Categorias = ({ setCatSelected }) => {
+    const [categorias, setCategorias] = useState([]);    
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/categorias').then((response)=>{
+            setCategorias(response.data);
+        }).catch((error)=>{});
+    },[])
+
     return (
         <Box>
             <AppBar position='static'>
@@ -8,7 +18,7 @@ const Categorias = ({ categorias, setCatSelected }) => {
                     <Button onClick={() => {setCatSelected(0)}} sx={{color: '#fff'}}>Todas</Button>
                     { categorias && categorias.map((item, index) => {
                         return <Button key={index} onClick={() => {
-                            setCatSelected(item.id);
+                            setCatSelected(item["_id"]);
                         }} sx={{color: '#fff'}}>{item.nombre}</Button>
                     })}
                 </Toolbar>
