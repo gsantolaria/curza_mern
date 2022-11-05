@@ -8,7 +8,7 @@ import { PAGES } from './constants';
 import './style.css';
 
 const Header = () => {
-    const [pages, setPages] = React.useState(PAGES);
+    const [pages] = React.useState(PAGES);
     return (
         <AppBar position="static">
         <Toolbar sx={{display: 'flex',justifyContent: 'space-between'}}>
