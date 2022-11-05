@@ -6,9 +6,11 @@ services:
     volumes:
       - ./react:/app
     working_dir: /app
+    environment:
+      REACT_APP_NODE_URL: $NODE_URL
     command: ['npm', 'start']
     ports:
-      - 3000:3000
+      - $REACT_PORT:3000
 
   node:
     image: node:16
