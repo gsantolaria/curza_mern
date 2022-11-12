@@ -2,9 +2,10 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import Categoria from '../models/categoria.js';
 import Producto from '../models/producto.js';
+import { verifyToken } from '../auth.js';
 const router = Router();
 
-router.get('/',(req, res) => {
+router.get('/', verifyToken,(req, res) => {
     Categoria.find({},(err, categorias) => {
         if(err){
             res.status(500);
