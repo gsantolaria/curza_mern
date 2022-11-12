@@ -1,14 +1,19 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material';
 import { Coffee } from '@mui/icons-material';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from 'actions/auth';
 import { PAGES } from './constants';
 import './style.css';
 
 const Header = () => {
     const [pages] = React.useState(PAGES);
+    const auth = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
     return (
         <AppBar position="static">
         <Toolbar sx={{display: 'flex',justifyContent: 'space-between'}}>
@@ -18,6 +23,14 @@ const Header = () => {
                     <Typography variant='h6'>Café CURZA</Typography>
                 </Box>
             </Link>
+            { auth.authenticated &&
+                <>
+                    <Typography variant='h6'>Bienvenido {auth.user.nombre}</Typography>
+                    <Button variant='contained' color='error' onClick={() => dispatch(logout())} >Salir</Button>
+                </>
+            }
+
+
             <nav style={{display: 'flex'}}>
             { pages && pages.map((item, index) => {
                 return (

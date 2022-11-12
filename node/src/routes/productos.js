@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import Producto from '../models/producto.js';
 import Categoria from '../models/categoria.js';
+import { verifyToken } from '../auth.js';
 const router = Router();
 
-router.get('/',(req, res) => {
+router.get('/', verifyToken ,(req, res) => {
 
     const { cat } = req.query;
     let filtro = {};
