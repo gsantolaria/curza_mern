@@ -1,12 +1,13 @@
-import { useSelector } from 'react-redux';
+import AuthContext from 'contexts/auth/context';
+import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const Privado = (props) => {
-    const auth = useSelector(state => state.auth);
+    const authContext = useContext(AuthContext);
 
     return (
         <>
-        { auth.authenticated ?
+        { authContext.authenticated ?
             <>{props.children}</>
         :
             <Navigate to='/' />

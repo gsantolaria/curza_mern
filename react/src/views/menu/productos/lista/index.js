@@ -1,22 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useContext, useCallback } from "react";
 import { Box, Card, CardContent, CardMedia, CardActions, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { getProductos, addProductoCarrito } from 'actions/productos';
-import { useDispatch, useSelector } from 'react-redux';
+import ProductosContext from "contexts/productos/context";
 
 const ListaProductos = ({ catSelected }) => {
-    const productos = useSelector(state => state.productos);
-    const carrito = useSelector(state => state.carrito);
-    const dispatch = useDispatch();
+    const productosContext = useContext(ProductosContext);
+    const carrito = [];
 
     useEffect(() => {
-        dispatch(getProductos(catSelected));
-    },[catSelected, dispatch])
+        productosContext.getProductos(catSelected);
+    },[catSelected])
 
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-            { productos.map((prod, index) => {
+            { productosContext.productos.map((prod, index) => {
 
                 let count = 0;
                 if(carrito[prod._id]) {
@@ -37,7 +35,7 @@ const ListaProductos = ({ catSelected }) => {
                     </CardContent>
                     <CardActions disableSpacing>
                         <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-                            <AddIcon onClick={() => dispatch(addProductoCarrito(prod))} sx={{cursor: 'pointer'}} />
+                            <AddIcon onClick={() => productosContext.addProductoCarrito(prod)} sx={{cursor: 'pointer'}} />
                             <Box>
                                 {count}
                             </Box>

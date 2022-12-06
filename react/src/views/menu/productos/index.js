@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import ListaProductos from "./lista";
 import Categorias from "./categorias";
+import ProductosProvider from "contexts/productos/provider";
 
 
 const Productos = () => {

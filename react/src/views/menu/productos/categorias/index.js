@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import axios from "axios";
+import miaxios from 'utils/mi-axios';
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 
 const Categorias = ({ setCatSelected }) => {
     const [categorias, setCategorias] = useState([]);    
-
+    const axios = miaxios();
     useEffect(() => {
         axios.get('http://localhost:8000/categorias').then((response)=>{
             setCategorias(response.data);

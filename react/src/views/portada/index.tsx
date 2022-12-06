@@ -1,16 +1,14 @@
 import { Box, Button, Typography, Paper, TextField } from '@mui/material';
-import { useState }  from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useContext }  from 'react';
 import { Navigate } from 'react-router-dom';
-import { login } from 'actions/auth';
+import AuthContext from 'contexts/auth/context';
 
 const Portada = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const auth = useSelector(state => state.auth);
-    const dispatch = useDispatch();
+    const authContext:any = useContext(AuthContext);
 
-    console.log("AUTHENTICATED", auth.authenticated);
+    console.log("AUTHENTICATED", authContext.authenticated);
 
     return (
         <Box sx={{
@@ -23,11 +21,11 @@ const Portada = () => {
             top: 0,
             height: '100%',
         }}>
-            { !auth.authenticated ? 
+            { !authContext.authenticated ? 
 
                 <Paper variant="elevation" elevation={2}>
                 <Typography component='h1' variant='h5'>Ingresar al sitio</Typography>
-                <form onSubmit={(e) => {e.preventDefault(); dispatch(login({username, password}))}}>
+                <form onSubmit={(e) => {e.preventDefault(); authContext.login({username, password})}}>
                     <TextField
                         type='text' 
                         placeholder='Usuario' 
