@@ -1,18 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
 import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material';
 import { Coffee } from '@mui/icons-material';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from 'actions/auth';
 import { PAGES } from './constants';
+import AuthContext from 'contexts/auth/context';
 import './style.css';
 
 const Header = () => {
     const [pages] = React.useState(PAGES);
-    const auth = useSelector(state => state.auth);
-    const dispatch = useDispatch();
+    const authContext = useContext(AuthContext);
 
     return (
         <AppBar position="static">
@@ -23,10 +19,10 @@ const Header = () => {
                     <Typography variant='h6'>Café CURZA</Typography>
                 </Box>
             </Link>
-            { auth.authenticated &&
+            { authContext.authenticated &&
                 <>
-                    <Typography variant='h6'>Bienvenido {auth.user.nombre}</Typography>
-                    <Button variant='contained' color='error' onClick={() => dispatch(logout())} >Salir</Button>
+                    <Typography variant='h6'>Bienvenido {authContext.user.nombre}</Typography>
+                    <Button variant='contained' color='error' onClick={() => authContext.logout()} >Salir</Button>
                 </>
             }
 

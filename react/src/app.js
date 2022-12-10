@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import Header from './views/header';
 import Portada from './views/portada';
 import Menu from './views/menu';
-import { useDispatch } from "react-redux";
 import Privado from "utils/privado";
-import { initAuth } from 'actions/auth';
+import AuthContext from 'contexts/auth/context';
 
 const App = () => {
 
     const { pathname } = useLocation();
-    const dispatch = useDispatch();
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
-        dispatch(initAuth())
+        authContext.initAuth();
     }, [])
 
     return (
